@@ -18,7 +18,7 @@ const app = express();
 
 // ----Configure Database---- //
 mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGO_DB_URI, {
+mongoose.connect('mongodb://localhost/dressrdb', {
   keepAlive: true,
   reconnectTries: Number.MAX_VALUE
 });
