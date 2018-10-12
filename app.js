@@ -9,20 +9,24 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+// ----Routes---- //
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 
+// ----App init---- //
 const app = express();
 
-mongoose.connect('mongodb://localhost/dressrdb', {
+// ----Configure Database---- //
+mongoose.Promise = Promise;
+mongoose.connect(process.env.MONGO_DB_URI, {
   keepAlive: true,
-  useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE
 });
 
+// ----Middlewares---- //
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:4200']
+  origin: [process.env.CLIENT_URL]
 }));
 
 app.use(session({

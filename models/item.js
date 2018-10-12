@@ -10,7 +10,13 @@ const itemSchema = new Schema({
   },
   category: {
     type: String,
+    required: true,
+    enum: ['top', 'bottom', 'footwear']
+  },
+  description: {
+    type: String,
     required: true
+
   },
   style: {
     type: String,
