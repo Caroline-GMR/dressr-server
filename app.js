@@ -48,5 +48,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/item', itemRouter);
+app.use('/item/:id', itemRouter);
 
 module.exports = app;

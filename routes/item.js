@@ -13,19 +13,51 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-router.post('/', uploadCloud.single('file'), (req, res, next) => {
-  const item = new Item({
-    name: req.body.name,
-    image: req.file.url
-  });
+// router.post('/', uploadCloud.single('file'), (req, res, next) => {
+//   console.log('que tengo en body', req.body);
+//   const item = new Item({
+//     picture: req.file.url,
+//     category: req.body.category,
+//     description: req.body.description,
+//     style: req.body.style
 
-  item.save((err) => {
-    if (err) return res.json(err);
-    return res.json({
-      message: 'New clothing added',
-      item: item
-    });
-  });
+//   });
+//   console.log('file', req.file.url);
+//   item.save((err) => {
+//     if (err) return res.json(err);
+//     return res.json({
+//       message: 'New clothing added',
+//       item: item
+//     });
+//   });
+// });
+
+router.post('/', uploadCloud.single('picture'), (req, res, next) => {
+  const owner = req.session.currentUser._id;
+  let picture;
+  let { category, description, style } = req.body;
+  if (req.file) {
+    picture = req.file.url;
+    console.log('img', req.file.url);
+  }
+  const item = new Item({ category, description, style, owner, picture });
+  item.save()
+    .then(() => {
+      res.redirect(`/item/${item._id}`);
+    })
+    .catch(next);
+});
+
+router.get('/_id', (req, res, next) => {
+  const id = req.params.id;
+  if (!req.session.currentUser) {
+    return res.redirect('/auth/login');
+  }
+  Item.findById(id)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch(next);
 });
 
 module.exports = router;
