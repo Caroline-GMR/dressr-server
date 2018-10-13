@@ -11,6 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const itemRouter = require('./routes/item');
 
 const app = express();
 
@@ -46,5 +47,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/item', itemRouter);
 
 module.exports = app;

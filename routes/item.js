@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const uploadCloud = require('../configs/cloudinary.js');
+const uploadCloud = require('../config/cloudinary.js');
 
 var Item = require('../models/item');
 

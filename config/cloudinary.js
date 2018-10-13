@@ -7,9 +7,9 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET
+  cloud_name: 'dowqh5zjd',
+  api_key: 499226874393186,
+  api_secret: 'I0OFoR_LlDwJGlunQxOpNPEypSU'
 });
 
 var storage = cloudinaryStorage({
