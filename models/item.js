@@ -16,9 +16,9 @@ const itemSchema = new Schema({
   category: {
     type: String,
     required: false,
-    enum: ['top', 'bottom', 'footwear']
+    enum: ['tops', 'bottoms', 'footwear']
   },
-  description: {
+  subcategory: {
     type: String,
     required: false
   },
