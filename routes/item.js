@@ -16,13 +16,13 @@ router.get('/', (req, res, next) => {
 // router.post('/', uploadCloud.single('file'), (req, res, next) => {
 //   console.log('que tengo en body', req.body);
 //   const item = new Item({
+//     owner: req.session.currentUser._id,
 //     picture: req.file.url,
 //     category: req.body.category,
-//     description: req.body.description,
+//     subcategory: req.body.subcategory,
 //     style: req.body.style
-
 //   });
-//   console.log('file', req.file.url);
+//   console.log(req.body.subcategory);
 //   item.save((err) => {
 //     if (err) return res.json(err);
 //     return res.json({
@@ -32,34 +32,22 @@ router.get('/', (req, res, next) => {
 //   });
 // });
 
-router.post('/', uploadCloud.single('picture'), (req, res, next) => {
-  // const input = req.body.input;
-  // if (input === 'dress' || 't-shirt' || 'jacket' || 'hoodie' || 'blouse' || 'jersey') {
-  //   this.input = this.category.top;
-  // }
-  // if (input === 'jeans' || 'skirt' || 'shorts' || 'leggings' || 'pants' || 'sweatpants') {
-  //   this.input = this.category.bottom;
-  // }
-  // if (input === 'sneakers' || 'boots' || 'loafers' || 'highheels' || 'ballerinas' || 'sandals') {
-  //   this.input = this.category.footwear;
-  // };
-
+router.post('/', uploadCloud.single('file'), (req, res, next) => {
   const owner = req.session.currentUser._id;
-  let picture;
-  let { category, description, style } = req.body;
-  if (req.file) {
-    picture = req.file.url;
-    console.log('img', req.file.url);
-  }
-  const item = new Item({ category, description, style, owner, picture });
+  let { category, subcategory, style } = req.body;
+  // if (req.file) {
+  //   picture = req.file.url;
+  //   console.log('img', req.file.url);
+  // }
+  const item = new Item({ owner, picture: req.file.url, category, subcategory, style });
   item.save()
-    .then(() => {
-      res.redirect(`/item/${item._id}`);
+    .then((result) => {
+      res.json(result);
     })
     .catch(next);
 });
 
-router.get('/_id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   const id = req.params.id;
   if (!req.session.currentUser) {
     return res.redirect('/auth/login');
