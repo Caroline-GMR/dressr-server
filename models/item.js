@@ -11,20 +11,20 @@ const itemSchema = new Schema({
   },
   picture: {
     type: String,
-    required: false
+    required: true
   },
   category: {
     type: String,
-    required: false,
+    required: true,
     enum: ['tops', 'bottoms', 'footwear']
   },
   subcategory: {
     type: String,
-    required: false
+    required: true
   },
   style: {
     type: String,
-    required: false
+    required: true
   }
 });
 
