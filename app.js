@@ -12,6 +12,7 @@ const MongoStore = require('connect-mongo')(session);
 // ----Routes---- //
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const itemRouter = require('./routes/item');
 
 // ----App init---- //
 const app = express();
@@ -50,5 +51,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/item', itemRouter);
+app.use('/item/:id', itemRouter);
+
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  res.status(404).json({ code: 'not found' });
+});
+
+app.use((err, req, res, next) => {
+  // always log the error
+  console.error('ERROR', req.method, req.path, err);
+
+  // only render if the error ocurred before sending the response
+  if (!res.headersSent) {
+    res.status(500).json({ code: 'unexpected' });
+  }
+});
 
 module.exports = app;

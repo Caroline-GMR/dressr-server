@@ -2,8 +2,13 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 const itemSchema = new Schema({
+  owner: {
+    type: ObjectId,
+    ref: 'User'
+  },
   picture: {
     type: String,
     required: true
@@ -11,12 +16,11 @@ const itemSchema = new Schema({
   category: {
     type: String,
     required: true,
-    enum: ['top', 'bottom', 'footwear']
+    enum: ['tops', 'bottoms', 'footwear']
   },
-  description: {
+  subcategory: {
     type: String,
     required: true
-
   },
   style: {
     type: String,
