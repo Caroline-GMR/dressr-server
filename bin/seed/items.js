@@ -1,11 +1,12 @@
 'use strict';
 
+require('dotenv').config();
 const mongoose = require('mongoose');
 
 const Item = require('../../models/item.js');
 const data = require('../../data/items.js');
 
-mongoose.connect('mongodb://localhost/dressrdb')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to Mongo!');
     return Item.remove({});

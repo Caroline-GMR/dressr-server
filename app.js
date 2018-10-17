@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -19,7 +20,7 @@ const app = express();
 
 // ----Configure Database---- //
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/dressrdb', {
+mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
   reconnectTries: Number.MAX_VALUE
 });
