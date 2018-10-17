@@ -2,23 +2,24 @@
 const express = require('express');
 const router = express.Router();
 
-const uploadCloud = require('../config/cloudinary.js');
-
-const Item = require('../models/item');
+const Outfit = require('../models/outfit');
 
 router.get('/', (req, res, next) => {
-  Item.find()
+  Outfit.find()
     .then((results) => {
       res.status(200).json(results);
     })
     .catch(next);
 });
 
-router.post('/', uploadCloud.single('file'), (req, res, next) => {
+router.post('/create', (req, res, next) => {
+  if (req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
   const owner = req.session.currentUser._id;
-  let { category, subcategory, style } = req.body;
-  const item = new Item({ owner, picture: req.file.url, category, subcategory, style });
-  item.save()
+  let { tops, bottoms, footwear, style } = req.body;
+  const outfit = new Outfit({ owner, tops, bottoms, footwear, style });
+  outfit.save()
     .then((result) => {
       res.json(result);
     })
@@ -30,7 +31,7 @@ router.get('/:id', (req, res, next) => {
   if (!req.session.currentUser) {
     return res.redirect('/auth/login');
   }
-  Item.findById(id)
+  Outfit.findById(id)
     .then((result) => {
       res.json(result);
     })
