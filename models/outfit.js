@@ -21,10 +21,6 @@ const outfitSchema = new Schema({
     type: ObjectId,
     ref: 'Item'
   },
-  picture: {
-    type: String,
-    required: true
-  },
   style: {
     type: String,
     required: true

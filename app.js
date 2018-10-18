@@ -54,9 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/item', itemRouter);
-app.use('/item/:id', itemRouter);
 app.use('/outfit', outfitRouter);
-app.use('/outfit/:id', outfitRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
