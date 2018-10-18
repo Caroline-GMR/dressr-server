@@ -7,7 +7,9 @@ const uploadCloud = require('../config/cloudinary.js');
 const Item = require('../models/item');
 
 router.get('/', (req, res, next) => {
-  Item.find()
+  const ownerId = req.session.currentUser._id;
+
+  Item.find({ owner: ownerId })
     .then((results) => {
       res.status(200).json(results);
     })
