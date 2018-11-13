@@ -5,7 +5,7 @@ const router = express.Router();
 const Outfit = require('../models/outfit');
 
 router.get('/', (req, res, next) => {
-  Outfit.find()
+  Outfit.find().populate('owner tops bottoms footwear')
     .then((results) => {
       res.status(200).json(results);
     })
